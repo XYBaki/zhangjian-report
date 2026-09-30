@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>杖剑传说 · 游戏体验与发行分析报告 第一部分：执行摘要与产品定位</title>
+<style>
+:root {
+  --bg: #0a0a0f; --surface: #14141c; --surface-2: #1c1c2a;
+  --text: #e0e0ea; --text-muted: #c8c8d8; --text-dim: #80808f;
+  --brand: #FFE600; --brand-soft: rgba(255,230,0,0.08); --brand-border: rgba(255,230,0,0.3);
+  --accent: #00e5ff; --accent-soft: rgba(0,229,255,0.08);
+  --warn: #ff3d7f; --warn-soft: rgba(255,61,127,0.08);
+  --danger: #ff3d7f; --danger-soft: rgba(255,61,127,0.08);
+  --success: #00e5ff; --success-soft: rgba(0,229,255,0.08);
+  --border: #2a2a3a; --radius: 8px; --radius-card: 12px;
+  --font: "PingFang SC","Noto Sans CJK SC","WenQuanYi Micro Hei",system-ui,sans-serif;
+  --rule: #2a2a3a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:64px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:15px; line-height:1.8; overflow-x:hidden;
+  background-image: radial-gradient(ellipse at 20% 0%,rgba(255,230,0,0.03),transparent 50%), radial-gradient(ellipse at 80% 100%,rgba(0,229,255,0.02),transparent 50%); background-attachment:fixed; }
+
+.progress-bar { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--brand),var(--accent)); z-index:200; transition:width 0.15s; width:0; }
+.topbar { position:fixed; top:0; left:0; right:0; height:56px; background:rgba(10,10,15,0.88); backdrop-filter:blur(20px); border-bottom:1px solid var(--rule); z-index:100; display:flex; align-items:center; padding:0 1.5rem; }
+.topbar-brand { font-size:0.95rem; color:var(--brand); letter-spacing:0.05em; flex-shrink:0; font-weight:600; }
+.topbar-nav { display:flex; gap:0.15rem; margin-left:1.5rem; overflow-x:auto; scrollbar-width:none; }
+.topbar-nav::-webkit-scrollbar { display:none; }
+.topbar-nav a { font-size:0.78rem; color:var(--text-dim); text-decoration:none; padding:0.3rem 0.55rem; border-radius:6px; white-space:nowrap; transition:all 0.2s; }
+.topbar-nav a:hover { color:var(--text); background:var(--surface-2); }
+.topbar-nav a.active { color:var(--brand); background:var(--brand-soft); }
+.topbar-pct { margin-left:auto; font-size:0.75rem; color:var(--text-dim); flex-shrink:0; font-family:monospace; }
+.menu-btn { display:none; position:fixed; top:0.6rem; left:0.75rem; z-index:200; background:var(--surface); border:1px solid var(--rule); border-radius:8px; width:36px; height:36px; color:var(--brand); cursor:pointer; font-size:1rem; align-items:center; justify-content:center; }
+
+.hero { min-height:42vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:5rem 2rem 2.5rem; position:relative; overflow:hidden;
+  background: radial-gradient(ellipse at 30% 20%,rgba(255,230,0,0.06),transparent 60%), radial-gradient(ellipse at 70% 80%,rgba(0,229,255,0.04),transparent 60%); }
+.hero::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(255,230,0,0.008) 2px,rgba(255,230,0,0.008) 4px); pointer-events:none; }
+.hero-tag { font-size:0.72rem; letter-spacing:0.25em; color:var(--accent); text-transform:uppercase; margin-bottom:1rem; font-family:monospace; }
+.hero h1 { font-size:clamp(1.7rem,4.5vw,2.6rem); font-weight:600; line-height:1.2; color:var(--text); margin-bottom:0.8rem; max-width:680px; }
+.hero h1 .hl { color:var(--brand); }
+.hero-sub { font-size:0.95rem; color:var(--text-dim); max-width:520px; line-height:1.6; }
+.hero-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:0.75rem; color:var(--text-dim); margin-top:1.2rem; font-family:monospace; }
+.hero-meta span { color:var(--accent); }
+
+.container { max-width:860px; margin:0 auto; padding:0 1.5rem 80px; }
+.report-header { display:none; }
+.chapter { padding:2.5rem 0 1rem; border-top:1px solid var(--rule); }
+.chapter:first-of-type { border-top:none; padding-top:1rem; }
+h2 { display:flex; align-items:center; gap:0.85rem; font-size:clamp(1.25rem,3vw,1.6rem); font-weight:600; margin:0 0 1.5rem; color:var(--text); border-bottom:none; padding-bottom:0; }
+h2 .num { display:inline-block; font-size:0.78rem; font-weight:700; color:var(--bg); background:var(--brand); padding:0.2rem 0.5rem; border-radius:4px; flex-shrink:0; width:auto; height:auto; line-height:1.4; border-radius:4px; margin-right:0; }
+h2 .wc { font-size:0.78rem; color:var(--accent); font-weight:400; margin-left:auto; font-family:monospace; }
+h3 { font-size:1.1rem; font-weight:500; color:var(--accent); margin:1.75rem 0 0.65rem; padding-left:0.65rem; border-left:3px solid var(--accent); }
+h4 { font-size:1rem; font-weight:600; color:var(--brand); margin:1.5rem 0 0.5rem; padding:0.4rem 0.65rem; background:var(--surface); border-radius:6px; border-left:3px solid var(--brand); }
+p { margin-bottom:0.85rem; color:var(--text); line-height:1.85; font-size:0.92rem; }
+p strong { color:var(--brand); font-weight:600; }
+p .hl { color:var(--brand); font-weight:600; }
+p .hl-accent { color:var(--accent); font-weight:600; }
+p .hl-warn { color:var(--warn); font-weight:600; }
+p .hl-danger { color:var(--danger); font-weight:600; }
+ul { list-style:none; margin:0.5rem 0 1rem; padding-left:0.5rem; }
+ul li { margin-bottom:0.4rem; color:var(--text); padding-left:1.1rem; position:relative; line-height:1.75; font-size:0.9rem; }
+ul li::before { content:'\25b8'; position:absolute; left:0; color:var(--accent); font-size:0.85em; }
+ul li strong { color:var(--brand); font-weight:600; }
+.card { background:var(--surface); border:1px solid var(--rule); border-radius:var(--radius-card); padding:1.1rem 1.3rem; margin-bottom:1rem; }
+.card-brand { border-color:var(--brand-border); background:linear-gradient(135deg,var(--surface) 0%,var(--brand-soft) 100%); }
+.card-accent { border-color:rgba(0,229,255,0.3); background:linear-gradient(135deg,var(--surface) 0%,var(--accent-soft) 100%); }
+.card-warn { border-color:rgba(255,61,127,0.3); background:linear-gradient(135deg,var(--surface) 0%,var(--warn-soft) 100%); }
+.card-danger { border-color:rgba(255,61,127,0.3); background:linear-gradient(135deg,var(--surface) 0%,var(--danger-soft) 100%); }
+.card-title { font-size:1rem; font-weight:600; margin-bottom:0.6rem; color:var(--brand); }
+.table-wrap { overflow-x:auto; overflow-y:auto; max-height:560px; border-radius:8px; border:1px solid var(--rule); margin:1rem 0; }
+table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+th { text-align:left; padding:0.5rem 0.7rem; background:var(--surface-2); color:var(--brand); font-weight:700; border-bottom:2px solid var(--brand); position:sticky; top:0; }
+td { padding:0.5rem 0.7rem; border-bottom:1px solid var(--rule); color:var(--text); vertical-align:top; line-height:1.7; }
+tr:nth-child(even) td { background:rgba(255,255,255,0.015); }
+tr:hover td { background:var(--surface-2); }
+td strong { color:var(--brand); }
+.note { background:var(--surface); border-left:3px solid var(--brand); padding:0.75rem 1rem; border-radius:0 6px 6px 0; margin:1rem 0; font-size:0.85rem; color:var(--text); line-height:1.8; }
+.note strong { color:var(--brand); }
+.note-accent { background:var(--surface); border-left-color:var(--accent); }
+.note-accent strong { color:var(--accent); }
+.note-warn { background:var(--surface); border-left-color:var(--warn); }
+.note-warn strong { color:var(--warn); }
+.note-danger { background:var(--surface); border-left-color:var(--danger); }
+.note-danger strong { color:var(--danger); }
+.fig { margin:1rem 0; background:var(--surface); border:1px solid var(--rule); border-radius:var(--radius-card); overflow:hidden; }
+.fig img { width:100%; display:block; }
+.fig .fig-cap { padding:0.6rem 1rem 0.75rem; font-size:0.75rem; color:var(--text-dim); line-height:1.6; border-top:1px solid var(--rule); }
+.fig .fig-cap strong { color:var(--text); }
+.judgment-box { background:rgba(255,230,0,0.04); border:1px solid var(--brand-border); border-radius:var(--radius-card); padding:1rem 1.25rem; margin:1rem 0; }
+.judgment-box .j-label { font-size:0.72rem; color:var(--brand); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem; font-family:monospace; }
+.judgment-box .j-content { color:var(--text); font-size:0.9rem; line-height:1.85; }
+.judgment-box .j-content strong { color:var(--brand); }
+.footer { text-align:center; color:var(--text-dim); font-size:0.8rem; margin-top:2rem; padding:2rem 0; border-top:1px solid var(--rule); font-family:monospace; }
+.footer { line-height:1.8; }
+/* 移动端响应式 */
+@media (max-width:768px) {
+  .topbar { padding:0 0.75rem; height:48px; }
+  .topbar-nav { display:none; }
+  .topbar-nav.open { display:flex; position:fixed; top:48px; left:0; right:0; background:var(--surface); border-bottom:1px solid var(--rule); padding:0.5rem 0.75rem; flex-direction:column; gap:0.15rem; }
+  .topbar-nav.open a { padding:0.5rem; }
+  .menu-btn { display:flex; }
+  .topbar-brand { font-size:0.85rem; }
+  .hero { padding:4rem 1rem 2rem; min-height:38vh; }
+  .container { padding:0 1rem 60px; }
+  .chapter { padding:2rem 0 0.75rem; }
+  h2 { font-size:1.2rem; }
+  h3 { font-size:1rem; }
+  p { font-size:0.88rem; }
+}
+/* 兼容原有 class */
+.compare-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.75rem; margin:1rem 0; }
+.compare-cell { background:var(--surface-2); border:1px solid var(--rule); border-radius:var(--radius); padding:0.9rem; }
+.compare-cell .cc-head { font-size:0.85rem; font-weight:600; margin-bottom:0.5rem; padding-bottom:0.4rem; border-bottom:1px solid var(--rule); }
+.compare-cell.zj { border-color:var(--brand-border); }
+.compare-cell.zj .cc-head { color:var(--brand); }
+.compare-cell.mf .cc-head { color:var(--accent); }
+.compare-cell.afk .cc-head { color:var(--warn); }
+.compare-cell ul { margin-bottom:0; }
+.compare-cell li { font-size:0.78rem; margin-bottom:0.25rem; }
+.timeline { position:relative; padding-left:24px; margin:1rem 0; }
+.timeline::before { content:""; position:absolute; left:6px; top:0; bottom:0; width:2px; background:var(--brand-border); }
+.tl-item { position:relative; margin-bottom:1rem; }
+.tl-item::before { content:""; position:absolute; left:-22px; top:5px; width:10px; height:10px; border-radius:50%; background:var(--brand); border:2px solid var(--bg); }
+.tl-date { font-size:0.78rem; color:var(--brand); font-weight:600; margin-bottom:0.15rem; font-family:monospace; }
+.tl-content { font-size:0.85rem; color:var(--text); line-height:1.7; }
+.tl-content strong { color:var(--brand); }
+.quote { background:var(--surface-2); border-left:3px solid var(--text-dim); padding:0.6rem 0.9rem; border-radius:0 6px 6px 0; margin:0.6rem 0; font-size:0.82rem; color:var(--text-muted); font-style:italic; }
+.quote-danger { border-left-color:var(--danger); }
+.quote-success { border-left-color:var(--success); }
+.quote .q-src { display:block; font-size:0.72rem; color:var(--text-dim); margin-top:0.25rem; font-style:normal; font-family:monospace; }
+.tag { display:inline-block; font-size:0.72rem; padding:0.15rem 0.5rem; border-radius:99px; margin-right:0.25rem; }
+.tag-danger { background:var(--danger-soft); color:var(--danger); }
+.tag-warn { background:var(--warn-soft); color:var(--warn); }
+.tag-accent { background:var(--accent-soft); color:var(--accent); }
+.tag-brand { background:var(--brand-soft); color:var(--brand); }
+.rec-item { background:var(--surface-2); border:1px solid var(--rule); border-radius:var(--radius); padding:0.9rem 1rem; margin-bottom:0.75rem; }
+.rec-item .ri-head { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem; }
+.rec-item .ri-priority { font-size:0.72rem; padding:0.15rem 0.5rem; border-radius:99px; font-weight:700; }
+.p-high { background:var(--danger-soft); color:var(--danger); }
+.p-mid { background:var(--warn-soft); color:var(--warn); }
+.p-low { background:var(--accent-soft); color:var(--accent); }
+.rec-item .ri-title { font-size:0.9rem; font-weight:600; color:var(--text); }
+.rec-item .ri-body { font-size:0.82rem; color:var(--text-muted); line-height:1.7; }
+.rec-item .ri-body strong { color:var(--text); }
+.rec-item .ri-effect { display:inline-block; font-size:0.72rem; color:var(--accent); background:var(--accent-soft); padding:0.1rem 0.4rem; border-radius:4px; margin-top:0.4rem; }
+.core-loop { display:flex; align-items:center; justify-content:center; gap:0.5rem; margin:1.25rem 0; flex-wrap:wrap; }
+.loop-node { background:var(--surface-2); border:1px solid var(--rule); border-radius:var(--radius); padding:0.75rem 1rem; text-align:center; min-width:90px; }
+.loop-node .ln-icon { font-size:1.4rem; margin-bottom:0.25rem; }
+.loop-node .ln-text { font-size:0.78rem; color:var(--text); font-weight:500; }
+.loop-node.brand { border-color:var(--brand-border); background:var(--brand-soft); }
+.loop-arrow { color:var(--text-dim); font-size:1.1rem; }
+.retention-chart { background:var(--surface-2); border-radius:var(--radius-card); padding:1.25rem; margin:1rem 0; }
+.rc-bar-group { display:flex; align-items:flex-end; justify-content:space-around; height:180px; margin-bottom:0.75rem; border-bottom:1px solid var(--rule); }
+.rc-bar-wrap { display:flex; flex-direction:column; align-items:center; gap:0.4rem; }
+.rc-bar { width:40px; border-radius:4px 4px 0 0; transition:all 0.3s; }
+.rc-label { font-size:0.72rem; color:var(--text-muted); font-family:monospace; }
+.rc-value { font-size:0.78rem; color:var(--text); font-weight:600; }
+.pay-map { display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; margin:1rem 0; }
+.pay-item { background:var(--surface-2); border:1px solid var(--rule); border-radius:var(--radius); padding:0.75rem; text-align:center; }
+.pay-item .pi-price { font-size:1.1rem; font-weight:700; color:var(--accent); margin-bottom:0.25rem; }
+.pay-item .pi-name { font-size:0.78rem; color:var(--text); margin-bottom:0.25rem; }
+.pay-item .pi-desc { font-size:0.7rem; color:var(--text-muted); line-height:1.5; }
+.pay-item .pi-tag { display:inline-block; font-size:0.65rem; padding:0.1rem 0.4rem; border-radius:99px; margin-top:0.4rem; }
+.back-top { position:fixed; bottom:1.5rem; right:1.5rem; width:38px; height:38px; background:var(--surface); border:1px solid var(--rule); border-radius:50%; color:var(--brand); display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:all 0.3s; z-index:50; text-decoration:none; font-size:1.1rem; }
+.back-top.show { opacity:1; }
+.back-top:hover { border-color:var(--brand); transform:translateY(-2px); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar" style="width: 33.6348%;"></div>
+<div class="menu-btn" onclick="document.querySelector('.topbar-nav').classList.toggle('open')">☰</div>
+
+<div class="topbar">
+  <div class="topbar-brand">ZJ REPORT</div>
+  <nav class="topbar-nav" id="topnav">
+    <a href="#part1" class="">01 执行摘要</a>
+    <a href="#part2" class="active">02 核心玩法</a>
+    <a href="#part3" class="">03 竞品对比</a>
+    <a href="#part4" class="">04 境外发行</a>
+    <a href="#part5" class="">05 运营数据</a>
+    <a href="#part6" class="">06 调优建议</a>
+  </nav>
+  <div class="topbar-pct" id="progText">34%</div>
+</div>
+
+<section class="hero">
+  <div class="hero-tag">PRODUCT ANALYSIS · 2026.09</div>
+  <h1>杖剑传说<span class="hl">游戏体验</span>与分析报告</h1>
+  <div class="hero-meta">
+    <div>作者 <span>XYBaki</span></div>
+    <div>邮箱 <span>846870373@qq.com</span></div>
+    <div>版本 <span>v1.0</span></div>
+    <div>数据截止 <span>2026.09.28</span></div>
+  </div>
+</section>
+
+<div class="container">
+<div class="report-header">
+  <h1>杖剑传说 · 游戏体验与发行分析报告</h1>
+  <div class="meta">面向吉比特境外发行中心岗位 · 作品集级报告 · 2026-09-27</div>
+  <div style="margin-top:14px; padding:14px 18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-card); font-size:13px; line-height:2;">
+    <strong style="color:var(--brand);">目录</strong><br>
+    <a href="#part1" style="color:var(--text-muted); text-decoration:none;">一、执行摘要与产品定位</a><br>
+    <a href="#part2" style="color:var(--text-muted); text-decoration:none;">二、核心玩法与体验拆解</a><br>
+    <a href="#part3" style="color:var(--text-muted); text-decoration:none;">三、竞品横向对比分析</a><br>
+    <a href="#part4" style="color:var(--text-muted); text-decoration:none;">四、境外发行与本地化观察</a><br>
+    <a href="#part5" style="color:var(--text-muted); text-decoration:none;">五、运营数据与市场表现观察</a><br>
+    <a href="#part6" style="color:var(--text-muted); text-decoration:none;">六、调优建议与优化方案</a>
+  </div>
+</div>
+<!-- ==================== 一、执行摘要与产品定位 ==================== -->
+<h2 id="part1"><span class="num">一</span>执行摘要与产品定位</h2>
+
+<p>《杖剑传说》是雷霆游戏研发、吉比特发行的<span class="hl">放置类MMORPG</span>手游，2025年5月大陆上线，2025年7月港澳台+日本上线，2026年5月欧美上线，计划2026年Q4进入韩国及东南亚市场。产品将放置的低肝度与MMO的社交深度结合，以自由转职、交易行经济、赛季制内容更新作为核心差异化特征。2026上半年合计流水约14.6亿元，TapTap评分8.6/223万关注，是吉比特境外发行战略的核心产品之一。</p>
+
+<!-- ==================== 1.1 产品概况 ==================== -->
+<h3>1.1 产品概况</h3>
+
+<p><strong>品类定位</strong>：放置类MMORPG（Idle MMORPG）。区别于传统放置RPG的单机式养成，杖剑传说在放置机制上叠加了MMO的社交层，包括公会、组队副本、交易行、界域蹲车等实时社交系统，使产品从"单人放置养成"升级为"放置驱动的社交MMO"。这一融合使产品在放置RPG品类中占据了"高ARPU+高留存天花板"的独特位置。</p>
+
+<p><strong>画面风格</strong>：2D竖屏、国风二次元美术风格，剑与魔法的异世界世界观。美术资源经历过一次完整替换（最早demo为修仙题材，后改为异世界题材），整体呈现为二次元美术风格，角色设计精致，场景以浮空岛、云雾、奇幻地貌为主。整体美术定位偏"轻松治愈"，与产品"怪轻松的异世界冒险"的基调一致。</p>
+
+<div class="fig">
+  <img src="images/real/zhangjian_taptap_2.jpg" alt="杖剑传说美术风格与世界观">
+  <div class="fig-cap">
+    <strong>图1-1：杖剑传说美术风格与世界观</strong>：2D竖屏、国风二次元、剑与魔法的异世界设定，构成了产品的视觉识别特征。<br>
+    <em>来源：TapTap杖剑传说官方宣传图</em>
+  </div>
+</div>
+
+<p><strong>目标受众</strong>：综合制作人访谈、巨量算数数据及社区观察，杖剑传说的用户画像具有以下特征：</p>
+
+<div class="note note-accent">
+  <strong>官方确认的画像特征</strong>：据巨量算数（抖音渠道）数据，杖剑传说玩家年龄分布比《出发吧麦芬》《剑与远征：启程》显著更年轻，雷霆旗下产品（问剑长生、一念逍遥）在年龄分布上与杖剑传说相似，整体偏向年轻玩家群体。海外市场方面，据制作人Random在游戏日报采访中回答"海外市场用户画像"时的表述，<strong>海外玩家30岁以上占比稍大</strong>（放置游戏玩家本身年龄偏大），<strong>女性用户占比偏多</strong>。
+</div>
+
+<p>基于游戏系统设计推断及玩家反馈样本，核心用户可进一步分为三类。<span class="hl-warn">以下人群占比为基于社区观察的定性推断，非官方数据</span>：</p>
+
+<table>
+  <tbody><tr><th style="width:100px;">人群</th><th>推测占比</th><th>画像</th><th>核心诉求</th></tr>
+  <tr><td><strong>核心MMO玩家</strong></td><td>约15-20%（推测）</td><td>25-35岁，有MMO经历，追求社交协作和数值深度，月付费500-5000元+</td><td>社交深度、职业平衡、新内容密度</td></tr>
+  <tr><td><strong>休闲放置玩家</strong></td><td>约50-60%（推测）</td><td>20-35岁，碎片化时间为主，偏好低肝度养成，月付费0-100元（月卡/通行证）</td><td>低肝度、空窗期体验、付费性价比</td></tr>
+  <tr><td><strong>IP联动用户</strong></td><td>约15-20%（推测）</td><td>18-30岁，因特定联动IP进入，偏好收集和外观，月付费0-200元</td><td>联动频率、角色实战可用性</td></tr>
+</tbody></table>
+
+<p><strong>上线市场</strong>：采取<span class="hl-accent">分阶段全球化策略</span>，可基于前序区域数据优化后续发行：</p>
+
+<table>
+  <tbody><tr><th>区域</th><th>上线时间</th><th>2026H1流水</th><th>状态</th></tr>
+  <tr><td>中国大陆</td><td>2025年5月29日</td><td>9.19亿元</td><td>运营中（S6赛季）</td></tr>
+  <tr><td>港澳台+日本+新马（同步上线）</td><td>2025年7月15日</td><td>3.33亿元</td><td>运营中（流水连续4季下降）</td></tr>
+  <tr><td>欧美（Sword x Staff）</td><td>2026年5月19日</td><td>2.07亿元</td><td>运营中（上线6周累计2000万美元）</td></tr>
+  <tr><td>韩国+东南亚</td><td>2025年Q4（计划，吉比特董事长卢竑岩披露）</td><td>—</td><td>待上线</td></tr>
+</tbody></table>
+
+<p style="font-size:12px;color:var(--text-dim);margin-top:-8px;margin-bottom:12px;"><strong>※流水数据来源</strong>：吉比特2026年半年度报告（2026年1-6月）。中国大陆9.19亿、港澳台+日本3.33亿为财报直接披露；欧美2.07亿为上线6周累计约2000万美元折算。</p>
+
+<p><strong>累计流水</strong>：据吉比特财报，截至2025年前三季度（上线约4个月），国服总流水11.66亿元，海外版流水4.78亿元，合计超16亿元。2026年上半年全球流水约14.6亿元。</p>
+
+<!-- ==================== 设计初衷 ==================== -->
+<div class="note note-accent">
+  <strong>官方设计初衷</strong>：据制作人林笋在2025年度中国游戏产业年会的分享，选题基于个人兴趣与市场需求的交集。制作人偏好放置、卡牌、MMO，而市场上SLG/MMO/卡牌玩家付费习惯好且用户规模大，最终选择"轻量级MMO"作为方向。董事长卢竑岩在2025半年报业绩说明会上强调，该设计"不是简单的玩法叠加"，而是观察到传统MMO体验过于沉重、无法满足当下用户需求，才在放置基础上引入MMO社交玩法。
+</div>
+
+<!-- ==================== 1.2 核心竞争力总结 ==================== -->
+<h3>1.2 核心竞争力总结</h3>
+
+<p>相比同类放置RPG（以《出发吧麦芬》《剑与远征：启程》为参照），杖剑传说的核心竞争力可归纳为以下三点：</p>
+
+<div class="card card-brand">
+  <div class="card-title">核心竞争力①：放置×MMO的社交深度融合</div>
+  <p>传统放置RPG的社交模型以异步互动为主（好友互赠体力、排行榜竞争），杖剑传说引入了<strong>公会讨伐、组队副本、界域蹲车、交易行</strong>等实时社交协作机制，使社交粘性从异步层级提升至同步层级。这是三款竞品中社交深度最高的设计，也是最难被复制的，需要组队副本、公会生态、交易行经济三个系统的协同运转。社交深度直接决定了留存天花板和ARPU上限，但社交体验依赖活跃用户基数，一旦用户基数萎缩，匹配池缩小将形成连锁衰减。</p>
+</div>
+
+<div class="card card-accent">
+  <div class="card-title">核心竞争力②：一个角色全职业自由转职</div>
+  <p>传统放置RPG的职业是固定的，体验多职业需重新养成角色。杖剑传说采用<strong>四职业（斗士/术士/贤者/骑士）自由转职、无损转换</strong>的设计，一个角色即可体验全部职业的技能和玩法。配合八转职业体系，提供了长线成长目标和社交驱动的付费激励（高转玩家在组队中优先被选择）。这一设计降低了多职业体验的养成成本，提升了玩家的内容消耗深度。转职材料也是核心付费点之一，形成"体验需求→付费转化"的闭环。</p>
+</div>
+
+<div class="card card-warn">
+  <div class="card-title">核心竞争力③：赛季制内容供给+高频IP联动</div>
+  <p>不同于传统放置RPG的功能迭代更新，杖剑传说采用类似MMO的<strong>赛季制</strong>，每3-4个月推出新国度+新转职阶+新伙伴+新幻兽，保持内容增量感。同时，14个月内完成9次以上IP联动（频率约1.5-2月/次），覆盖国漫、虚拟歌手、经典影视等多品类IP，持续提供新鲜感和情感连接。最新一次联动为2026年9月24日开启的「非人哉」联动，推出九月、小玉、敖烈、哪吒四位联动角色，签到可免费领取伙伴九月及30连抽。赛季制构建了跨赛季的叙事目标（如S6开篇的"诸神篇章"），联动则提供事件驱动的回流动力，两者结合使产品的内容供给密度在放置RPG品类中处于领先位置。</p>
+</div>
+
+<div class="judgment-box">
+  <div class="j-label">一句话定位</div>
+  <div class="j-content">杖剑传说 = <strong>用放置机制降低MMO的进入门槛，用MMO的社交深度提升放置游戏的留存天花板</strong>。其核心竞争力在于"MMO社交深度"这一差异化特征，但同时也承担着社交深度对用户基数强依赖的结构性风险。</div>
+</div>
+
+<div class="note note-accent">
+  <strong>本部分信息来源</strong>：吉比特2026年半年报、东方财富网/游戏葡萄、2025年度中国游戏产业年会、游戏日报采访、巨量算数、TapTap官方页面、游侠网、dataintelo全球放置游戏市场报告、博研咨询中国放置类游戏行业报告、17173/3DM联动报道。<strong>数据截至2026年9月26日</strong>。
+</div>
+
+<!-- ==================== 二、核心玩法与体验拆解 ==================== -->
+<h2 id="part2"><span class="num">二</span>核心玩法与体验拆解</h2>
+
+<!-- ==================== 2.1 核心体验循环 ==================== -->
+<h3>2.1 核心体验循环（Core Loop）分析</h3>
+
+<p>杖剑传说的核心体验循环呈现"<span class="hl">短期放置收菜+中期养成推进+长期赛季目标</span>"的三层结构。短期循环以"上线→收菜→推进→下线"为核心，依赖放置机制降低操作压力；中期循环以养成系统推进为驱动，通过战力提升解锁新内容；长期循环以赛季制内容更新为目标，维持长线留存动力。</p>
+
+<div class="core-loop">
+  <div class="loop-node brand">
+    <div class="ln-icon">📥</div>
+    <div class="ln-text">上线收菜</div>
+  </div>
+  <div class="loop-arrow">→</div>
+  <div class="loop-node">
+    <div class="ln-icon">🗺️</div>
+    <div class="ln-text">推主线/活动</div>
+  </div>
+  <div class="loop-arrow">→</div>
+  <div class="loop-node">
+    <div class="ln-icon">⚔️</div>
+    <div class="ln-text">刷秘境/爬塔</div>
+  </div>
+  <div class="loop-arrow">→</div>
+  <div class="loop-node">
+    <div class="ln-icon">⬆️</div>
+    <div class="ln-text">提升战力</div>
+  </div>
+  <div class="loop-arrow">→</div>
+  <div class="loop-node brand">
+    <div class="ln-icon">🎴</div>
+    <div class="ln-text">抽卡/转职</div>
+  </div>
+  <div class="loop-arrow">→</div>
+  <div class="loop-node">
+    <div class="ln-icon">😴</div>
+    <div class="ln-text">下线挂机</div>
+  </div>
+  <div class="loop-arrow">↻</div>
+</div>
+
+<p style="text-align:center;font-size:12px;color:var(--text-dim);margin-top:-8px;">图2-1：核心体验循环示意图 · 紫色节点为关键付费/决策节点</p>
+
+<p><strong>短期循环（每日）</strong>：玩家上线后首先领取离线挂机收益（家园小推车的离线收益，最高可储存36小时），然后推进主线任务、清空日常活动、刷素材秘境、挑战幻想阶梯（爬塔），最后将体力消耗完毕后下线挂机。符合放置RPG的碎片化时间设计。关键系统包括：</p>
+
+<ul>
+  <li><strong>家园小推车</strong>：离线自动产出经验、金币、材料，是放置收益的核心载体</li>
+  <li><strong>素材秘境</strong>：4个秘境分别产出装备升级、金币、技能升级、遗物升级资源，消耗体力获取，是日常资源的主要来源</li>
+  <li><strong>幻想阶梯</strong>：爬塔玩法，可跨战力挑战，是检验战力和获取高额奖励的核心出口</li>
+  <li><strong>心愿女神像</strong>：技能抽取系统，开局赠送30次传说抽取机会，保底70次，是技能养成的核心入口</li>
+</ul>
+
+<p><strong>放置减负设计</strong>：核心养成项（装备、技能、宠物等级）采用"养格子"的提升方式，玩家培养的是栏位等级而非具体装备/技能，装备和技能更替时可无成本更换，大幅降低了试错成本和肝度。大地图探索也设置了一键追踪、战力碾压直接击杀、快捷解谜等便捷功能，减轻玩家开图负担。</p>
+
+<p><strong>中期循环（每周/每月）</strong>：以养成系统推进为驱动。玩家通过日常积累资源，投入到等级、装备强化（需保持4件装备平均升级以触发共鸣效果）、技能升级、幻兽培育、古遗物收集等核心养成项中，提升战力以解锁更高难度的副本和转职阶。中期循环的核心张力在于"资源有限性"，玩家需要在多个养成线之间做出资源分配决策，而转职系统提供了阶段性的成长目标。</p>
+
+<p><strong>长期循环（赛季，3-4个月）</strong>：以赛季制内容更新为驱动。每赛季推出新国度地图、新转职阶、新伙伴、新幻兽，提供跨赛季的叙事目标（如S6开篇的"诸神篇章"）。赛季评分奖励（星象合约）为玩家提供了赛季内的长线目标，而联动活动则提供事件驱动的回流动力。</p>
+
+<div class="note note-accent">
+  <strong>Core Loop 设计评价</strong>：三层循环结构清晰，短期循环的低肝度有效降低了用户进入门槛，中期循环的养成深度提供了付费动力，长期循环的赛季制维持了长线留存。据体验报告观察，游戏中大部分战力与放置时间挂钩，氪金获取的战力基数相对克制。但中期循环存在"养成线过多导致资源分散"的问题，长期循环则面临"赛季中后段空窗期"的挑战，核心内容通常1-2周消耗完毕，剩余时间依赖日常撑场。
+</div>
+
+<!-- ==================== 2.2 组队与社交机制 ==================== -->
+<h3>2.2 组队与社交机制体验</h3>
+
+<p>杖剑传说的社交系统是其区别于传统放置RPG的核心特征。产品在放置机制上叠加了MMO的社交层，形成了"鼓励社交但不强制社交"的设计基调。</p>
+
+<div class="card card-brand">
+  <div class="card-title">社交系统构成</div>
+  <table>
+    <tbody><tr><th>系统</th><th>社交类型</th><th>核心玩法</th><th>强制度</th></tr>
+    <tr><td><strong>国度副本/团队副本</strong></td><td>实时协作</td><td><strong>4人组队</strong>挑战副本（每个国度地图对应特色副本，掉落装备与碎片），可自行组队或随机匹配；支持跨服组队</td><td>中（高难副本需组队）</td></tr>
+    <tr><td><strong>圣兽试炼</strong></td><td>实时协作</td><td><strong>6人组队</strong>单挑圣兽BOSS，限时回合内累计伤害，按伤害值发放奖励（前置：需先击败国度圣兽解锁）</td><td>低（可选参与）</td></tr>
+    <tr><td><strong>混沌侵袭</strong></td><td>竞技社交</td><td><strong>4人组队</strong>刷小怪/打BOSS，每周轮流，结算给代币；伤害累计越高奖励越好</td><td>低（可选参与）</td></tr>
+    <tr><td><strong>公会系统</strong></td><td>组织社交</td><td>公会讨伐（全公会成员可同时进入场景打公会BOSS，不固定人数）、天赋/科技升级、商店兑换，提供挂机助力设施和额外奖励</td><td>中（资源获取依赖公会）</td></tr>
+    <tr><td><strong>公会战</strong></td><td>公会PVP</td><td style="position: relative;">异步回合制PVP：会长/副会长报名，成员各驻守1据点（3高级+6中级+若干普通），每人每次公会战最多进攻3次，每据点最多被击破3次；含<strong>段位赛制</strong>（黑铁→青铜→白银→黄金→钻石）与赛季战区结算排名奖励；按周循环（周日/二/四报名，一/三/五对战10:00-22:00）</td><td>中（段位奖励驱动参与）</td></tr>
+    <tr><td><strong>交易行</strong></td><td>经济社交</td><td style="position: relative;">解锁商会后开放。含<strong>交易行</strong>（大部分商品用晨星互相交易，少部分买方付耀星卖方得晨星；价格每日08:00根据前日市场数据调整；部分商品如装备碎片受赛季限制）与<strong>拍卖行</strong>（用耀星竞拍，竞价被超过时无损返还，出售成功得等价晨星；竞价按梯度加价）</td><td>低（可选参与）</td></tr>
+    <tr><td><strong>界域蹲车</strong></td><td>异步协作</td><td>在特定地图区域蹲守世界BOSS，玩家轮流"开车"（发起挑战）共享奖励</td><td>低（社交驱动）</td></tr>
+  </tbody></table>
+</div>
+
+<h4>优点：社交深度提升留存粘性</h4>
+
+<ul>
+  <li><strong>协作成就感</strong>：组队副本中玩家与敌人回合制行动，协作击败BOSS的成就感是单机放置RPG相对来说无法提供的体验，有效提升了社交粘性</li>
+  <li><strong>经济互赖</strong>：交易行系统构建了"低氪刷碎片上架→重氪购买"的资源循环，零氪玩家通过"为大佬打工"获取资源，重氪玩家通过交易加速养成，形成了不同付费层级间的经济互赖关系</li>
+  <li><strong>宽松的组队要求</strong>：不强制传统MMO的T/奶/DPS铁三角搭配。主流的<strong>4人国度/团队副本</strong>中可有多个重复职业；高氪玩家选择治疗（贤者）或坦克（骑士）职业也能打出高额伤害，实现战力碾压与职别跨越，降低了玩家选择职业的纠结和"职业歧视"</li>
+  <li><strong>匹配与招募并行</strong>：大部分副本支持直接匹配随机组队和组队招募两种方式，前期战力不足时可招募挑选队友，中后期战力提升后可通过匹配快捷通关</li>
+  <li><strong>跨服组队扩容</strong>：跨服组队机制扩大了匹配池，缓解了单服用户基数不足的问题</li>
+</ul>
+
+<h4>缺点：社交深度带来的体验摩擦</h4>
+
+<ul>
+  <li><strong>匹配等待时间</strong>：有玩家反馈部分时段组队副本匹配需约1分钟，非高峰期等待时间更长，与放置RPG"即开即玩"的体验预期存在冲突</li>
+  <li><strong>低战歧视</strong>：高难副本的组队中，低战力玩家容易被踢出队伍，形成社交压力。随着用户基数萎缩，低活跃时段的匹配体验会进一步下降</li>
+  <li><strong>公会活跃度依赖</strong>：公会BOSS、天赋升级、商店兑换等资源获取依赖公会活跃度，一旦公会成员退坑潮出现，资源获取将受阻</li>
+  <li><strong>交易行工作室问题</strong>：官方8-9月封禁工作室账号4000+例、倒金500例，说明交易行经济系统存在工作室滥用问题，影响正常玩家的交易体验</li>
+</ul>
+
+<div class="judgment-box">
+  <div class="j-label">社交设计判断</div>
+  <div class="j-content">杖剑传说的社交设计是"<strong>放置的壳，MMO的核</strong>"。用放置机制降低了MMO的进入门槛，用MMO的社交深度提升了放置游戏的留存天花板。这一设计的核心价值在于构建了难以复制的社交优势，但核心风险也在于社交体验对用户基数的强依赖。当流水连续4季下降、用户基数萎缩时，社交体验的下降将形成连锁衰减。如何在用户基数波动时维持社交体验质量，是长线运营的核心课题。</div>
+</div>
+
+<!-- ==================== 2.3 新手留存与卡点设计 ==================== -->
+<h3>2.3 新手留存与卡点设计（D1/D3/D7体验曲线）</h3>
+
+<p>基于新手攻略、玩家反馈及游戏系统设计推断，杖剑传说的新手体验曲线呈现"D1高密度引导→D2-D3内容解锁→D4+养成深化"的节奏。以下按天数拆解关键体验节点和潜在断崖点。</p>
+
+<div class="retention-chart">
+  <div style="text-align:center;font-size:13px;color:var(--text);margin-bottom:16px;font-weight:600;">新手体验强度曲线（D1-D7）<span style="font-size:11px;color:var(--warn);font-weight:400;margin-left:8px;">※基于攻略内容密度推断，非官方数据</span></div>
+  <div class="rc-bar-group">
+    <div class="rc-bar-wrap">
+      <div class="rc-value">高</div>
+      <div class="rc-bar" style="height:150px;background:linear-gradient(180deg,var(--brand),var(--brand-soft));"></div>
+      <div class="rc-label">D1</div>
+    </div>
+    <div class="rc-bar-wrap">
+      <div class="rc-value">中高</div>
+      <div class="rc-bar" style="height:120px;background:linear-gradient(180deg,var(--accent),var(--accent-soft));"></div>
+      <div class="rc-label">D2</div>
+    </div>
+    <div class="rc-bar-wrap">
+      <div class="rc-value">中</div>
+      <div class="rc-bar" style="height:90px;background:linear-gradient(180deg,var(--accent),var(--accent-soft));"></div>
+      <div class="rc-label">D3</div>
+    </div>
+    <div class="rc-bar-wrap">
+      <div class="rc-value">中低</div>
+      <div class="rc-bar" style="height:65px;background:linear-gradient(180deg,var(--warn),var(--warn-soft));"></div>
+      <div class="rc-label">D4</div>
+    </div>
+    <div class="rc-bar-wrap">
+      <div class="rc-value">中低</div>
+      <div class="rc-bar" style="height:60px;background:linear-gradient(180deg,var(--warn),var(--warn-soft));"></div>
+      <div class="rc-label">D5</div>
+    </div>
+    <div class="rc-bar-wrap">
+      <div class="rc-value">回升</div>
+      <div class="rc-bar" style="height:85px;background:linear-gradient(180deg,var(--accent),var(--accent-soft));"></div>
+      <div class="rc-label">D6</div>
+    </div>
+    <div class="rc-bar-wrap">
+      <div class="rc-value">中</div>
+      <div class="rc-bar" style="height:80px;background:linear-gradient(180deg,var(--brand),var(--brand-soft));"></div>
+      <div class="rc-label">D7</div>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--text-dim);text-align:center;">注：体验强度基于新手攻略内容密度+玩家反馈推断，非官方留存数据</div>
+</div>
+
+<table>
+  <tbody><tr><th style="width:70px;">阶段</th><th>核心体验</th><th>关键系统解锁</th><th>潜在断崖点</th></tr>
+  <tr>
+    <td><strong>D1</strong></td>
+    <td>高密度引导，任务内容丰富。跟随主线熟悉操作，技能系统开放（有什么带什么），装备强化开放（需保持4件平均升级触发共鸣），心愿女神像开放（送30抽）</td>
+    <td>主线任务、技能系统、装备强化、心愿女神像、家园小推车</td>
+    <td>任务量过大导致疲劳；新手引导过长引发不耐烦</td>
+  </tr>
+  <tr>
+    <td><strong>D2-D3</strong></td>
+    <td>推进主线解锁更多内容，优先刷体力效率高的任务。家园小推车可储存36小时离线收益。开始接触素材秘境和幻想阶梯</td>
+    <td>家园小推车、素材秘境、幻想阶梯、公会系统</td>
+    <td>主线卡点（战力不足无法推进）；资源分配迷茫</td>
+  </tr>
+  <tr>
+    <td><strong>D4-D6</strong></td>
+    <td>职业强化和幻兽育成开始深化，优先度高的装备开始严格筛选。转职节点出现（100级后可转职，但转职后部分技能、古遗物、宠物需重新抽取构建，成本较高）</td>
+    <td>幻兽系统、转职系统、交易行</td>
+    <td><span class="hl-warn">转职战力门槛卡点</span>；养成线过多导致资源分散；组队副本匹配体验差</td>
+  </tr>
+  <tr>
+    <td><strong>D7</strong></td>
+    <td>7日签到福利发放，转职后体验新职业技能，赛季评分目标开始引导长线目标</td>
+    <td>7日签到奖励、赛季评分系统</td>
+    <td>转职后内容消耗完毕，进入日常循环的"无聊期"</td>
+  </tr>
+</tbody></table>
+
+<div class="note note-warn">
+  <strong>关键断崖点分析</strong>：D4-D6的转职战力门槛可能是潜在流失节点。当玩家战力不足以推进转职、但日常内容已消耗完毕时，可能进入"无事可做"的空窗期。放置机制本应缓解这一问题（挂机涨战力），但如果玩家对放置收益的感知不足（如不知道小推车可以储存36小时收益），可能会因"看不到成长"而流失。这一推断需要通过实际留存数据验证。
+</div>
+
+<!-- ==================== 2.4 商业化体系拆解 ==================== -->
+<h3>2.4 商业化体系拆解</h3>
+
+<p>杖剑传说的商业化以"<span class="hl">月卡+基金+通行证+限时礼包+抽卡</span>"为核心结构，付费点从6元首充延伸到高氪外观。但罗列付费点本身意义有限，更重要的是理解<strong>这套设计为什么匹配放置RPG×MMO的品类特征</strong>，以及<strong>对三类目标用户的付费迁移路径是否顺畅</strong>。</p>
+
+<div class="note"><strong>数据说明</strong>：本部分所列付费点价格及内容，主要依据TapTap、18183、游侠网等平台的<strong>玩家氪金攻略</strong>整理，反映的是特定版本下玩家记录到的定价与奖励，可能随版本更新调整；性价比评价为玩家攻略中的主观感受，非官方数据。商业化结构分析和用户迁移路径判断为基于上述信息的推断。</div>
+
+<h4>一、低门槛入口：放置RPG品类逻辑下的"免费游玩承诺"</h4>
+
+<p>放置RPG品类的核心用户特征是"时间充裕但付费意愿低"，这类玩家对"不花钱也能玩"的承诺极度敏感。杖剑传说的低门槛设计正是围绕这一特征展开：</p>
+
+<table>
+  <tbody><tr><th style="width:140px;">低门槛付费点</th><th style="width:100px;">价格</th><th>设计意图分析</th></tr>
+  <tr><td><strong>新手礼包</strong></td><td>6元</td><td>40级传说武器，用极低价格提供即时正反馈，完成首充转化</td></tr>
+  <tr><td><strong>月卡</strong></td><td>30元/月</td><td>据攻略每日200绑钻+5%经验，日均约1元，订阅定价较低</td></tr>
+  <tr><td><strong>每日免费10抽</strong></td><td>0元</td><td>签到+日常即送，降低抽卡焦虑，维持每日活跃</td></tr>
+  <tr><td><strong>交易行</strong></td><td>0元</td><td>低氪刷副本碎片上架交易行赚取晨星（硬通货）。部分放置RPG（如一念逍遥、剑与远征）也有交易系统，但杖剑传说的交易行直接产出硬通货，为零氪玩家提供了通过游戏行为获取付费资源的路径</td></tr>
+  <tr><td><strong>签到幻装</strong></td><td>0元</td><td>节日活动签到免费赠送整套幻装（如2025圣诞"星霜盛典"签到15天送圣诞幻装）。注：同期"雪人星愿"的盲盒机为付费玩法（直购幻装衣服30元、盲盒抽奖10发保底），非免费</td></tr>
+</tbody></table>
+
+<p><strong>分析</strong>：这套设计推测对休闲放置玩家（约50-60%用户基数）较友好。首充6元+月卡30元即可获得核心体验，交易行则为零氪玩家提供了可持续的成长路径。放置RPG品类的核心特征是玩家可通过挂机积累资源逐步成长，交易行将这一机制延伸为"通过游戏行为获取硬通货"，是放置品类低门槛理念在商业化层面的体现。相比部分硬核向MMO的数值付费门槛，杖剑传说将低门槛付费与挂机养成结合，推测有助于扩大付费面、降低玩家的付费心理压力。</p>
+
+<div class="note note-accent"><strong>品类对比</strong>&nbsp; &nbsp;剑与远征等放置RPG虽有交易系统，但交易货币多为游戏内货币或专属交易货币；杖剑传说通过交易行让低氪玩家能"卖碎片给重氪"赚取晨星，形成了不同付费层级间的经济互赖，这是放置×MMO融合在商业化层面的一个差异化特征。</div>
+
+<h4>二、赛季制基金：长线留存绑定与中氪承接</h4>
+
+<p>杖剑传说在赛季制框架下设计了多档基金产品。据玩家攻略记录，宠物基金（幻契盟约）128元、晨星基金98元、女神牌基金128元等，玩家攻略普遍认为这类产品"<strong>单次返还比例较高，但需持续多赛季购买才见效</strong>"。以宠物基金为例，据某攻略记录128元可得176次宠物抽卡，若按单抽6元的常规定价换算，等价约1056元，返还倍数约8倍。这一换算为攻略作者的计算，非官方返还比例。</p>
+
+<table>
+  <tbody><tr><th style="width:140px;">基金类型</th><th style="width:80px;">价格</th><th>绑定系统</th><th>设计逻辑</th></tr>
+  <tr><td>宠物基金（幻契盟约）</td><td>128元</td><td>宠物抽取</td><td>将宠物养成成本分摊到赛季周期，绑定长期留存</td></tr>
+  <tr><td>晨星基金</td><td>98元</td><td>晨星货币</td><td>提供硬通货，降低日常资源焦虑</td></tr>
+  <tr><td>女神牌基金</td><td>128元</td><td>扭蛋机</td><td>据攻略有30%返点机制，消费返利绑定长期付费</td></tr>
+</tbody></table>
+
+<p><strong>分析</strong>：基金产品的设计逻辑推测为"用较高返还比例吸引中氪玩家持续付费，而非一次性消费"。这对核心MMO玩家（约15-20%用户，付费意愿强、追求战力提升）可能有较强吸引力，这类玩家愿意为长期成长投入，基金的分摊式设计匹配了他们的赛季节奏。</p>
+
+<p>但潜在问题在于：基金"不持续买效果有限"的特性，对<strong>间歇性付费的中氪玩家</strong>可能不友好。一个每月预算200-300元的玩家，买了月卡30元后剩余预算有限，买一两次基金可能看不到明显效果，容易放弃。这可能导致下一节分析的"中间档位断层"问题。</p>
+
+<h4>三、抽卡深度设计：放置RPG的"碎片化付费"与MMO的"养成深度"结合（分析）</h4>
+
+<p>杖剑传说的核心付费项为<strong>技能、古遗物、幻兽</strong>三大系统，三者均有重复升星与图鉴机制。抽卡机制有两个关键设计值得分析：</p>
+
+<ul>
+  <li><strong>"升级制"卡池</strong>：低阶池→高阶池的升级结构，消耗低阶资源兑换高阶池门票。这一设计推测的意义在于：<strong>降低抽卡的负反馈</strong>。传统放置RPG抽卡是"出垃圾=浪费"，升级制让低阶产出也有积累价值，玩家不会因为抽到低阶道具而产生强烈挫败感。这推测对时间充裕但付费敏感的放置用户画像较匹配。</li>
+  <li><strong>转职联动卡池</strong>：转职后技能卡池内容变化，低阶池会产出当前职业的技能。这一设计推测的意义在于：<strong>将转职系统与付费深度绑定</strong>。玩家每次转职都意味着新的抽卡需求，一个角色全职业自由转职的卖点，在商业化层面变成了"每个职业都需要独立投入"的付费深度扩展。对追求全职业体验的核心MMO玩家，这推测是较强的付费驱动。</li>
+</ul>
+
+<p><strong>分析</strong>：这套抽卡设计推测是"放置的低门槛抽卡体验+MMO的多系统养成深度"的结合。低门槛入口让休闲玩家不抗拒付费，多系统深度则让核心玩家有持续投入的空间。但深度本身也意味着：<strong>当一个玩家想要追上第一梯队，可能需要同时投入技能、古遗物、幻兽三个系统</strong>，总成本推测远超单一养成线的放置竞品。</p>
+
+<h4>四、付费迁移路径分析：三层用户的关键断层</h4>
+
+<p>结合三类用户画像，基于玩家攻略记录的付费点价格与社区反馈，分析各层级的付费迁移路径是否顺畅：</p>
+
+<table style="">
+  <tbody><tr><th style="width:100px;">用户层级</th><th style="width:100px;">月预算</th><th>核心付费点</th><th>迁移路径分析</th></tr>
+  <tr><td><strong>零氪→微氪</strong></td><td>0→30元</td><td>首充6元→月卡30元</td><td>6元首充提供即时正反馈，玩家攻略普遍认为月卡性价比高，迁移路径相对清晰、顺畅</td></tr>
+  <tr><td><strong>微氪→低氪</strong></td><td>30→100元</td><td>→基金98-128元/巡礼之征</td><td>玩家攻略认为基金返还比例较高但需持续投入；巡礼之征据攻略早期68元/期，后续调整为98元/期（每期约半个月），迁移有吸引力，整体基本顺畅</td></tr>
+  <tr><td><strong>低氪→中氪</strong></td><td>100→500元</td><td>→每日特惠18元/天+新人礼包组合+秘宝档位</td><td>据攻略整理，100-500元区间缺乏持续性的高性价比选项。每日特惠月开销约540元、新人礼包仅限首周，基金需持续多赛季才见效，迁移路径存在断层</td></tr>
+  <tr><td><strong>中氪→重氪</strong></td><td>500→5000元+</td><td>→秘宝全档1344元/期+联动转盘+弹窗拉满</td><td>据攻略，秘宝和转盘有消费上限，达到上限后只能"1:1买耀星"或靠累计充值获取界域翅膀，玩家攻略认为后续付费性价比明显下降，存在性价比倒挂</td></tr>
+</tbody></table>
+
+<div class="card card-danger" style="">
+  <div class="card-title">核心问题：中间档位（100-1000元）性价比断层</div>
+  <p style="margin-bottom:8px;">基于玩家攻略整理的付费点价格与社区反馈，推测这是整套商业化设计中较关键的结构性问题。高返还比例产品集中在100元以下（月卡30元、基金98-128元），100元以上缺乏<strong>持续性的</strong>高性价比选项：</p>
+  <ul style="margin-bottom:0;">
+    <li><strong>每日特惠18元/天</strong>：据攻略，10天180元可得1奇迹遗物+20技能抽+2传说遗物，玩家攻略认为单日性价比尚可，但月开销约540元，对月预算200-500元的中氪玩家不可持续</li>
+    <li><strong>新人礼包</strong>：据攻略最高974元（新人扭蛋礼包四档30+98+198+648），但仅限首周，无法作为持续付费选项</li>
+    <li><strong>基金需长期持续</strong>：玩家反馈单赛季买一两次效果不明显，对间歇性付费玩家不友好</li>
+  </ul>
+  <p style="margin-bottom:0;">推测结果：<strong>微氪玩家想加预算但缺乏好的承接产品</strong>，要么停在月卡+基金的低消费档，要么直接跳到重氪的1:1买耀星，中间缺少平滑过渡。</p>
+</div>
+
+<div class="card card-danger" style="">
+  <div class="card-title">重氪端问题：性价比倒挂与付费天花板</div>
+  <p style="margin-bottom:8px;">据玩家攻略，重氪玩家在买完所有较高返还比例的产品（月卡、基金、巡礼、秘宝全档）后，剩余付费选项主要有：</p>
+  <ul style="margin-bottom:8px;">
+    <li><strong>1:1买耀星</strong>：充值直接兑换付费货币，无额外溢价，玩家攻略普遍认为这是性价比最低的付费方式</li>
+    <li><strong>界域翅膀</strong>：据交易平台账号信息，为累计充值约2万元可获得的外观奖励，无战力属性，对追求战力的重氪玩家吸引力有限</li>
+    <li><strong>强化石礼包</strong>：弹屏礼包之一，攻略建议中氪以上可考虑拉满</li>
+  </ul>
+  <p style="margin-bottom:0;">推测这导致重氪玩家的"单位金钱战力回报"在达到一定消费量后<strong>明显下降</strong>。交易猫等平台可见"万氪账号不到1折出号"的现象（如2万氪账号仅售600-900元），这在一定程度上反映了重氪玩家对付费性价比的不满——后续付费多为1:1兑换，账号残值偏低。</p>
+</div>
+
+<h4 style="">五、弹窗礼包与限时活动：放置品类的"碎片化刺激"设计</h4>
+
+<p style="">杖剑传说的弹窗礼包（开图道具、抽卡礼包、强化石礼包）和限时活动（秘宝大作战、联动转盘）在功能上承担了"碎片化付费刺激"的角色：</p>
+
+<ul style="">
+  <li><strong>对休闲放置玩家</strong>：据攻略，6元开图道具、6元秘宝档位提供了"小额即时消费"的出口，匹配碎片化游玩节奏。这部分设计推测是合理的，放置玩家不会一次性大额消费，但会被低单价+即时满足吸引</li>
+  <li><strong>对IP联动用户</strong>：联动转盘是针对这类用户的核心付费点。据洛天依联动攻略，转盘300抽可拿完全部奖励（每次保底60抽）；获取第二个联动伙伴约需氪294元（98+128+68档位），三个伙伴全拿约需596元。不同联动的全收集成本有差异（罗小黑联动攻略记录全收集约1752元）。秘宝大作战的世界树能量据攻略可跨期保留，但联动转盘券是否跨期因活动而异</li>
+  <li><strong>问题（玩家反馈）</strong>：弹窗礼包在开图、升级等节点频繁触发，虽然部分性价比据攻略评价较高，但"频繁弹窗"对放置玩家的"低压力"体验有破坏，放置用户的核心诉求是"不被打扰"，弹窗轰炸与品类调性存在张力</li>
+</ul>
+
+<div class="judgment-box" style="">
+  <div class="j-label">商业化判断</div>
+  <div class="j-content">基于玩家攻略整理的付费点信息与社区反馈，推测杖剑传说的商业化设计在<strong>入口端</strong>（6元首充、30元月卡、交易行零氪路径）与放置RPG品类逻辑较匹配，低门槛、碎片化、时间可换数值，可能有效覆盖了占用户基数50-60%的休闲放置玩家。抽卡的"升级制"卡池和"转职联动"设计也推测将放置的低门槛体验与MMO的多系统深度结合，为核心玩家提供了持续付费空间。<br><br>但<strong>中间档位（100-1000元）的性价比断层</strong>推测为较突出的结构性问题：高返还比例产品集中在100元以下，100元以上缺乏持续性承接选项，可能导致微氪→中氪的迁移路径断裂。重氪端则面临"1:1买耀星"的低性价比问题，交易平台可见"万氪账号不到1折出号"的现象。这与杖剑传说上线后月流水逐月下滑的趋势在方向上一致——当头部付费用户饱和且中间档位无法承接迁移时，流水可能快速回落。<br><br><strong>核心调优方向</strong>：不是增加付费点数量，而是<strong>填补100-1000元区间的持续性高性价比产品</strong>，例如月费制中氪礼包（200-300元/月，含固定资源+限时道具）、提升每日礼包的保底机制、为重氪端设计阶梯式溢价（而非1:1断崖式跳变）。</div>
+</div>
+
+<div class="note" style="">
+  <strong>本部分信息来源与性质说明</strong>：付费点价格及内容主要依据TapTap、18183、游侠网等平台的<strong>玩家氪金攻略</strong>整理，反映特定版本下玩家记录的定价，可能随版本调整；性价比评价为攻略作者的主观感受；交易猫账号交易数据用于辅助说明重氪端残值现象；流水趋势参考吉比特财报及券商研报。商业化结构分析、用户迁移路径判断、调优建议均为<strong>基于上述信息的推断</strong>，非官方结论。<strong>数据截至2026年9月27日</strong>。
+</div>
+
+<!-- ==================== 三、竞品横向对比分析 ==================== -->
+<h2 id="part3" style=""><span class="num">三</span>竞品横向对比分析</h2>
+
+<!-- ==================== 3.1 竞品选择 ==================== -->
+<h3 style="">3.1 竞品选择</h3>
+
+<p style="">选取两款同品类竞品进行横向对比：<strong>《出发吧麦芬》</strong>（心动网络，2024年5月15日大陆上线）和<strong>《剑与远征：启程》</strong>（莉莉丝游戏研发、Farlight Games海外发行，2024年3月27日海外首发、8月8日大陆公测）。选品依据如下：</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:24px 0;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-card);overflow:hidden;">
+    <img src="https://aka.doubaocdn.com/s/0NRHh7j6VI" alt="杖剑传说实机画面" style="width:100%;display:block;aspect-ratio:9/16;object-fit:cover;">
+    <div style="padding:10px 12px;">
+      <div style="font-size:14px;font-weight:600;color:var(--text);">杖剑传说</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:4px;">图片来源：TapTap官方页面（实机画面）</div>
+    </div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-card);overflow:hidden;">
+    <img src="https://aka.doubaocdn.com/s/zQMoWLzEaW" alt="出发吧麦芬实机画面" style="width:100%;display:block;aspect-ratio:9/16;object-fit:cover;">
+    <div style="padding:10px 12px;">
+      <div style="font-size:14px;font-weight:600;color:var(--text);">出发吧麦芬</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:4px;">图片来源：TapTap官方页面（实机画面）</div>
+    </div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-card);overflow:hidden;display:flex;flex-direction:column;">
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a1a3a 0%,#1a1a20 100%);min-height:280px;">
+      <img src="https://lilithimage.lilithcdn.com/allgames-official-web/editor-static/3b893b7864181b8d30f933a9ff56cd7e.webp" alt="剑与远征：启程官方壁纸（血月将至-伙伴集结）" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div style="padding:10px 12px;">
+      <div style="font-size:14px;font-weight:600;color:var(--text);">剑与远征：启程</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:4px;">图片来源：游戏官网"血月将至"赛季登录界面壁纸</div>
+    </div>
+  </div>
+</div>
+
+<ul style="">
+  <li><strong>品类重叠度</strong>：三款均属放置RPG大品类，核心机制均包含离线挂机收益和长线养成</li>
+  <li><strong>差异化路径不同</strong>：杖剑传说走"放置×MMO社交"，麦芬走"放置×轻社交双人同行"，剑远赴"放置×策略卡牌+开放世界探索"，三条路径代表了放置RPG社交化的不同方向，具备可比性</li>
+  <li><strong>均已全球化发行</strong>：三款产品均已完成或正在进行海外发行，可对比境外发行策略</li>
+</ul>
+
+<table style="">
+  <tbody><tr><th style="width:90px;">维度</th><th>杖剑传说</th><th>出发吧麦芬</th><th>剑与远征：启程</th></tr>
+  <tr><td><strong>研发/发行</strong></td><td>SSStudio/雷霆游戏</td><td>心动网络股份有限公司（自研自发，制作团队Team MEKA，自称《天天打波利》原班人马）</td><td>莉莉丝游戏/Farlight Games（海外发行）</td></tr>
+  <tr><td><strong>上线时间</strong></td><td>2025年5月（大陆）</td><td>2024年1月24日港澳台首发、5月15日大陆公测（TapTap官方显示）</td><td>2024年3月27日海外首发（美区App Store首日登顶免费榜总榜第一）、2024年8月8日大陆公测（TapTap显示2025-04-28为国服赛季更新节点，非首次上线）</td></tr>
+  <tr><td><strong>核心品类</strong></td><td>放置×MMO</td><td>放置×轻社交（据制作人Yoky访谈：定位"介于轻度挂机放置和重度沉浸式MMO之间"）</td><td>放置×策略卡牌+开放世界探索</td></tr>
+  <tr><td><strong>画面</strong></td><td>2D竖屏，二次元</td><td>3D竖屏，<strong>官方自称"日式西幻"风格</strong>，房车旅行世界观</td><td>3D竖屏，西式奇幻（官方自称"Magical Storybook"魔法故事书风格）</td></tr>
+  <tr><td><strong>社交模型</strong></td><td>公会+交易行+组队副本</td><td>双人同行（2人固定搭档，官方定位"友爱"、"不被固定队伍和功利主义所束缚"）+家族+秘境+旅团</td><td>公会+跨服竞技+共享等级系统（共鸣水晶，5英雄共享全家）</td></tr>
+  <tr><td><strong>角色系统</strong></td><td>四职业自由转职，八转</td><td>五大职业（剑士/游侠/学者/服事/影袭）+转职；官方玩法描述："自由构筑强大稳定的核心技能"</td><td>六大英雄职业（坦克/战士/游侠/法师/刺客/辅助），阵营克制系统</td></tr>
+  <tr><td><strong>商业化核心</strong></td><td>转职材料+月卡+交易行</td><td>外观+月卡+通行证+麦乐兽抽取+骑宠（具体价格官方公开渠道未公示，需进入游戏内查看）</td><td>英雄抽卡（4大池：全英雄招募/限定UP/新手/史诗）+月卡+通行证（伊索米亚月刊98元）+皮肤</td></tr>
+  <tr><td><strong>TapTap评分</strong></td><td>8.6分</td><td>7.4分（15,482条评价，TapTap官方显示）</td><td>6.6分（8,685条评价）</td></tr>
+  <tr><td><strong>流水参考</strong></td><td>国服首月4.24亿，上线4个月国服+海外16亿</td><td>据点点数据：港澳台首月流水过亿、截至5月港澳台收入超6.5亿元；据点点数据国服首月iOS预估收入1.87亿元（已扣渠道分成）</td><td>据Sensor Tower：海外收入占比约80%，下载量超1200万次，海外IAP收入1.28亿美元（截至2024年10月），美国市场收入占比超54%；2024年获Google Play年度最佳游戏、App Store年度游戏、TGA年度最佳手游提名</td></tr>
+</tbody></table>
+
+<div class="note note-warn" style="">
+  <strong>数据说明</strong>：三款游戏TapTap评分均为截图时点的最新数据（2026年9月）。杖剑传说TapTap显示评分8.6，但社区有玩家质疑该评分长期无波动，认为实际口碑可能低于显示值；剑与远征启程TapTap显示2025-04-28为国服赛季更新节点，<strong>实际海外首发为2024年3月27日、大陆公测为2024年8月8日</strong>（来源：界面财经、羊城晚报报道、Sensor Tower数据）；剑远启程海外流水数据来源于Sensor Tower、17173、36氪报道，<strong>非官方披露</strong>，仅供参考。流水数据因各公司披露口径不同，暂不列入对比表，在3.3节单独说明。
+</div>
+
+<!-- ==================== 3.2 玩法与美术包装对比 ==================== -->
+<h3 style="">3.2 玩法与美术包装对比</h3>
+
+<div class="note note-accent" style="">
+  <strong>玩家年龄分布</strong>：据巨量算数（抖音渠道，近半年数据），杖剑传说的玩家年龄分布比《出发吧麦芬》《剑与远征：启程》显著更年轻。雷霆旗下《问剑长生》（2024年末）、《一念逍遥》（2021年初）的年龄分布与杖剑传说相似度较高，人群画像普遍偏向年轻群体。这与杖剑传说"异世界+热门IP联动"的宣发策略、二次元美术风格直接相关。
+</div>
+
+<h4 style="">画面差异</h4>
+
+<div class="compare-grid" style="">
+  <div class="compare-cell zj">
+    <div class="cc-head">杖剑传说</div>
+    <ul>
+      <li>2D竖屏，二次元</li>
+      <li>剑与魔法异世界世界观</li>
+      <li>浮空岛、云雾奇幻地貌</li>
+      <li>角色设计偏精致日系</li>
+    </ul>
+  </div>
+  <div class="compare-cell mf">
+    <div class="cc-head">出发吧麦芬</div>
+    <ul>
+      <li>3D竖屏，<strong>官方自称"日式西幻"风格</strong></li>
+      <li>房车旅行世界观（中庭世界）</li>
+      <li>美术建模与骨骼打击表现较心动前作《天天打波利》明显提升（来源：评测拆解）</li>
+      <li>制作团队：Team MEKA（《天天打波利》原班人马）</li>
+    </ul>
+  </div>
+  <div class="compare-cell afk">
+    <div class="cc-head">剑与远征：启程</div>
+    <ul>
+      <li>3D竖屏，西式奇幻</li>
+      <li>伊索米亚大世界</li>
+      <li>开放世界探索设计</li>
+      <li>英雄立绘品质高</li>
+    </ul>
+  </div>
+</div>
+
+<p style=""><strong>画面风格对比分析</strong>：三款产品选择了三种不同的美术方向。杖剑传说的2D国风二次元在三款中美术成本相对可控，但风格辨识度依赖角色设计；麦芬的3D画风（官方自称"日式西幻"，房车旅行世界观覆盖女性和休闲用户），美术建模与骨骼打击表现较心动前作《天天打波利》明显提升；剑远启程的3D西式奇幻+开放世界在三款中美术投入最大，英雄立绘品质高，官方自称"Magical Storybook"魔法故事书风格，但3D大世界的开发和维护成本也最高。<span class="hl-warn">※以上为基于公开资料和评测拆解的分析，非官方美术投入数据</span>。</p>
+
+<h4 style="">战斗反馈与核心玩法</h4>
+
+<table style="">
+  <tbody><tr><th>维度</th><th>杖剑传说</th><th>出发吧麦芬</th><th>剑与远征：启程</th></tr>
+  <tr><td><strong>战斗模式</strong></td><td>自动战斗为主，技能自由搭配，200+技能构建Build</td><td>自动战斗，需手动释放技能；官方玩法描述："自由构筑强大稳定的核心技能"+"在战斗中选择合适的时机，手动释放战术技能"</td><td>棋盘格布阵+自动回合制战斗（六职业：坦克/战士/游侠/法师/刺客/辅助），站位决定胜负</td></tr>
+  <tr><td><strong>操作强度</strong></td><td>低（自动战斗）</td><td>中（需手动放技能）</td><td>中（战前策略布阵为主，战斗过程自动）</td></tr>
+  <tr><td><strong>核心养成</strong></td><td>装备+技能+宠物+幻兽+遗物+转职</td><td>装备+招式+麦乐兽+转职+骑宠（具体系统细节官方公开渠道未完整公示）</td><td>英雄收集+升阶（神话+解锁专属武器，至高+解锁技能强化）+装备+共鸣水晶（5英雄共享等级全家）+EX武器</td></tr>
+  <tr><td><strong>社交玩法</strong></td><td>4人组队副本、公会BOSS、交易行、界域蹲车</td><td>双人同行（2人固定搭档，官方定位"友爱"、"不被固定队伍和功利主义所束缚"）+家族+秘境+旅团</td><td>公会、跨服竞技、共享等级系统降低养成分散</td></tr>
+  <tr><td><strong>放置体验</strong></td><td>离线挂机收益（家园小推车，36小时储存）</td><td>离线挂机收益</td><td>离线挂机收益+训练手册自动产出（陀螺科技拆解：产量设上限+频率控制，避免等级爆炸）</td></tr>
+</tbody></table>
+
+<p style=""><strong>战斗反馈差异</strong>：杖剑传说的自动战斗+200+技能Build构建，策略深度在技能搭配而非实时操作，符合放置RPG的"低操作高策略"定位。麦芬官方玩法描述称"自由构筑强大稳定的核心技能，也可以选择在战斗中选择合适的时机，手动释放战术技能"，即技能构建在战前完成，但战斗过程中技能仍需手动释放，存在"放置自动战斗"与"手动操作MMO"之间的设计张力，操作强度高于杖剑传说。剑远启程的棋盘格布阵+六职业站位组合，操作门槛在战前阵容搭配而非实时操作，战斗过程自动进行，战斗反馈偏策略卡牌而非动作。</p>
+
+<p style=""><strong>社交深度差异</strong>：杖剑传说的4人组队副本+交易行+公会构成了最完整的MMO社交链条；麦芬的双人同行是更轻量的社交设计（2人固定搭档），官方定位"友爱"、"不被固定队伍和功利主义所束缚"，社交压力低但粘性依赖搭档留存；剑远启程的社交以公会和跨服竞技为主，且共享等级系统降低了养成分散压力，实时协作需求最低。</p>
+
+<!-- ==================== 3.3 商业化与养成线深度对比 ==================== -->
+<h3 style="">3.3 商业化与养成线深度对比</h3>
+
+<h4 style="">商业化结构对比</h4>
+
+<table style="">
+  <tbody><tr><th>维度</th><th>杖剑传说</th><th>出发吧麦芬</th><th>剑与远征：启程</th></tr>
+  <tr><td><strong>核心付费点</strong></td><td>月卡（30元）、巡礼（早期68元/期，后调整为98元/期）、成长基金（128元）、转职材料、弹窗礼包</td><td>月卡（30元/月，送3300钻石+30天5%经验和金币加成）+大月卡/通行证"星辰同行"（68元/月，含养成材料+满级满星秘宝）+麦乐兽抽取+骑宠（开服第八天开启，免费系统）+外观</td><td>英雄抽卡（4大池：全英雄招募/限定UP/新手/史诗，60抽保底出超稀有英雄）、月卡（30元）、通行证（伊索米亚月刊98元）、皮肤、赛季通行证</td></tr>
+  <tr><td><strong>付费驱动</strong></td><td>养成深度（转职材料加速）</td><td>外观+宠物收集（据制作人Yoky访谈：定位"介于轻度挂机放置和重度沉浸式MMO之间"，数值商业化相对弱）</td><td>英雄收集+阵容深度（据海外评测：后期突破战力阈值后不付费成长极慢，赛季通行证增加消费压力）</td></tr>
+  <tr><td><strong>ARPU特征</strong></td><td>高ARPU上限，中间档位断层</td><td>低ARPU天花板，广付费面；据点点数据：港澳台首月流水过亿、截至5月港澳台收入超6.5亿元；国服首月iOS预估收入1.87亿元（已扣渠道分成）</td><td>中ARPU，依赖新英雄更新；据Sensor Tower：海外IAP收入1.28亿美元（截至2024年10月），海外收入占比约80%</td></tr>
+  <tr><td><strong>零氪体验</strong></td><td>交易行可刷碎片卖晨星，零氪可玩</td><td>外观驱动，零氪数值体验尚可</td><td>据海外评测：前几周零氪体验良好，后期竞争性玩家会感到付费压力</td></tr>
+</tbody></table>
+
+<p style=""><strong>商业化路径差异</strong>：杖剑传说的商业化以"养成深度"为核心，付费直接提升数值（转职材料、装备强化加速），ARPU上限高但中间档位（100-1000元）性价比不足。麦芬的商业化以"外观+宠物"为核心，付费以收集和个性化为主，数值商业化相对弱；据制作人Yoky访谈，麦芬定位"介于轻度挂机放置和重度沉浸式MMO之间"，官方玩法描述称"自由构筑强大稳定的核心技能"，付费面广但ARPU天花板低（具体付费点价格官方公开渠道未公示）。剑远启程的商业化以"英雄抽卡"为核心，付费获取新英雄提升阵容深度，商业化效率取决于新英雄更新频率；据海外评测，游戏后期突破特定战力阈值后不投入付费货币成长极慢，赛季通行证进一步增加消费压力。</p>
+
+<h4 style="">养成线深度对比</h4>
+
+<table style="">
+  <tbody><tr><th>维度</th><th>杖剑传说</th><th>出发吧麦芬</th><th>剑与远征：启程</th></tr>
+  <tr><td><strong>养成线数量</strong></td><td>装备+技能+宠物+幻兽+遗物+转职（6条+）</td><td>装备+招式+麦乐兽+转职+骑宠（5条，具体系统细节官方公开渠道未完整公示）</td><td>英雄升阶（含神话+/至高+/EX武器6-25级）+装备+共鸣水晶+EX武器+阵营加成（5条，且共享等级降低养成分散压力）</td></tr>
+  <tr><td><strong>养成周期</strong></td><td>赛季制（3-4月），八转长线</td><td>版本更新制，转职推进</td><td>赛季制（含Soul Pact系统迭代，原Faction Talents改为Soul Pact），英雄持续更新</td></tr>
+  <tr><td><strong>数值膨胀</strong></td><td>赛季制导致跨赛季战力膨胀明显</td><td>麦乐兽换代带来数值跃升（具体迭代节奏官方未公示）</td><td>新英雄带来阵容迭代，但共享等级机制缓解老英雄被淘汰的速度</td></tr>
+  <tr><td><strong>资源分配压力</strong></td><td>高（6条养成线竞争资源）</td><td>中（5条养成线，"自由构筑核心技能"降低策略门槛）</td><td>中低（共享等级聚焦5英雄培养，资源集中度较高）</td></tr>
+</tbody></table>
+
+<p style=""><strong>养成深度分析</strong>：杖剑传说的养成线数量最多（6条以上），养成深度在三款中最高，这为高ARPU提供了基础，但也带来了"资源分配压力大"的问题，玩家需要在装备、技能、宠物、幻兽、遗物、转职之间做出资源分配决策。麦芬的养成线相对精简（5条），麦乐兽系统是核心差异化养成（具体境界、迭代机制等细节官方公开渠道未完整公示，需进入游戏内查看），骑宠作为另一条养成线存在。官方玩法描述称"自由构筑强大稳定的核心技能"，是其区别于杖剑传说"200+技能自由搭配"的差异化设计。剑远启程的养成虽达5条（英雄升阶+装备+共鸣+EX武器+阵营），但<strong>共享等级机制（5英雄共享全家）将养成资源聚焦在5个英雄上，资源分散压力相对较低</strong>，这一点是其区别于杖剑传说的关键设计——通过系统层降低养成分散压力，使玩家可以更聚焦地投入资源。据陀螺科技拆解，剑远启程通过训练手册产出设上限+频率控制，避免等级"爆炸"，是放置品类轻度化的重要举措。</p>
+
+<div class="note" style="">
+  <strong>竞品信息来源说明</strong>：麦芬官方信息来自TapTap及制作人访谈，价格来自玩家攻略；剑远启程系统拆解来自陀螺科技及海外wiki，流水来自Sensor Tower。杖剑传说价格参考2.4部分。对比分析基于上述公开信息，数据截至2026年9月28日。
+</div>
+
+<div class="judgment-box" style="">
+  <div class="j-label">竞品定位总结</div>
+  <div class="j-content">
+    <p style="margin-bottom:8px;">三款产品在放置RPG品类中占据了不同的竞争位置：</p>
+    <p style="margin-bottom:8px;">• <strong>杖剑传说</strong> = 放置 × MMO深度 → 高ARPU上限 + 高社交深度 + 高资源分配压力<br>
+    • <strong>出发吧麦芬</strong> = 放置 × 轻社交 → 低ARPU天花板 + 广付费面 + 低社交门槛<br>
+    • <strong>剑与远征：启程</strong> = 放置 × 策略卡牌+开放世界 → 中ARPU + 全球化能力强（美国市场占比超54%）+ 低实时社交需求</p>
+    <p style="margin-bottom:0;">三款产品的社交定位差异化明显：杖剑传说以4人组队副本+交易行+公会构建完整的MMO社交链条，社交互动频次高、对活跃用户基数依赖强；麦芬的双人同行设计社交门槛最低，但粘性依赖搭档留存；剑远启程以共享等级+公会为主，实时协作需求最低，社交压力最小。在杖剑传说的放置×MMO赛道定位下，这套社交体系的优势在于通过交易行经济互赖和组队副本协作，将不同付费层级玩家绑定在同一生态内，提升留存粘性；局限性在于当活跃用户规模收缩时，组队匹配和交易行流动性会受到影响，需通过跨服匹配等运营手段缓解。</p>
+  </div>
+</div>
+
+<div class="note" style="">
+  <strong>本部分信息来源</strong>：TapTap出发吧麦芬页面（评分、评论）、心动网络官网、九游/289手游剑与远征启程介绍、TapTap剑与远征启程论坛、游侠网/游戏狗杖剑传说攻略、DataEye麦芬数据报道。竞品评分和流水数据为公开渠道整理，部分为早期数据已标注核实提示。<strong>数据截至2026年9月26日</strong>。
+</div>
+
+<!-- ==================== 四、境外发行与本地化观察 ==================== -->
+<h2 id="part4" style=""><span class="num">四</span>境外发行与本地化观察</h2>
+
+<p style="">杖剑传说采取<span class="hl">分阶段全球化策略</span>：2025年5月29日中国大陆先行公测，2025年7月15日中国港澳台、日本、新马地区<strong>同步上线</strong>（非逐区域分别上线），2026年5月19日欧美版（Sword x Staff）上线，韩国与东南亚为后续计划（吉比特董事长卢竑岩披露可能于2025年Q4上线，待确认）。这种策略的优势是可基于前序区域的运营数据优化后续发行，国服与首批海外市场间隔仅约1.5个月，欧美版则在首批海外市场验证约10个月后推出。以下从本地化体验和版本运营两个维度展开分析。</p>
+
+<!-- ==================== 4.1 本地化体验 ==================== -->
+<h3 style="">4.1 本地化体验</h3>
+
+<h4 style="">发行区域与上线节奏</h4>
+
+<div class="timeline" style="">
+  <div class="tl-item">
+    <div class="tl-date">2025年5月29日</div>
+    <div class="tl-content"><strong>中国大陆公测</strong>，首月流水约4.24亿元，App Store畅销榜登顶TOP10、免费榜登顶</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">2025年7月15日</div>
+    <div class="tl-content"><strong>中国港澳台、日本、新马地区同步上线</strong>，一周内先后登顶多地App Store免费榜和畅销榜，日本地区畅销榜最高至第17名</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">2026年5月19日</div>
+    <div class="tl-content"><strong>欧美版（Sword x Staff）上线</strong>，首月同时位于10余个区域市场App Store畅销榜Top50，美国最高至第26名</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">2026年Q4（计划）</div>
+    <div class="tl-content"><strong>韩国、东南亚市场上线</strong>（吉比特半年报披露的储备计划）</div>
+  </div>
+</div>
+
+<h4 style="">语言与内容本地化</h4>
+
+<table style="">
+  <tbody><tr><th style="width:120px;">区域</th><th>上线时间</th><th>本地化语言</th><th>畅销榜表现</th><th>运营状态</th></tr>
+  <tr><td>中国大陆</td><td>2025.05.29</td><td>简体中文</td><td>上线初期最高Top 10，长期保持前60，2026Q2平均69名</td><td>运营中，S6赛季</td></tr>
+  <tr><td>港澳台</td><td>2025.07.15</td><td>繁体中文</td><td>多次登顶免费榜和畅销榜</td><td>运营中</td></tr>
+  <tr><td>日本</td><td>2025.07.15</td><td>日语</td><td>最高第17名</td><td>运营中，流水连续下降</td></tr>
+  <tr><td>新马</td><td>2025.07.15</td><td>—</td><td>—</td><td>运营中</td></tr>
+  <tr><td>欧美</td><td>2026.05.19</td><td>英语等</td><td>10余区域Top50，美国最高26名</td><td>运营中，尚未盈利</td></tr>
+  <tr><td>韩国/东南亚</td><td>2026 Q4（计划）</td><td>韩语等（计划）</td><td>—</td><td>待上线</td></tr>
+</tbody></table>
+
+<div class="note note-warn" style="">
+  <strong>数据说明</strong>：以上畅销榜排名来自吉比特半年报及公开新闻报道。日本市场"流水连续下降"基于吉比特财报中港澳台+日本版季度流水数据（4.78→3.14→2.00→1.33亿元）推断，非日本单区域数据。新马地区的具体表现公开信息较少。
+</div>
+
+<h4 style="">UI/UX适配与文化适配</h4>
+
+<p style=""><strong>美术风格的跨文化适配</strong>：据制作人林笋在2025年度中国游戏产业年会的分享，项目选题阶段曾考虑修仙题材（公司有积累），但基于全球化考虑，最终选择<strong>奇幻+多元文化融合</strong>的题材，包含西方奇幻的森之国、沙漠题材的沙之国、日式和风的泽之国、中国风的龙之国。美术风格选择二次元方向，以东亚为主要目标市场再辐射全球。这种题材选择从立项阶段就降低了文化障碍，比修仙题材更易被海外市场接受。</p>
+
+<p style=""><strong>本地化包装策略</strong>：制作人表示，在游戏内容设计上尽量减少出现本土化的包装内容，以避免后期全球化翻译的困难并降低其他市场的理解成本。例如，各国传统节日不直接展示节日名称和定义，而是包装成游戏中虚构的概念，但传达对应节日的氛围和核心思想。<span class="hl-accent">※以上为制作人官方分享内容</span>。</p>
+
+<p style=""><strong>游戏机制的跨区域适配</strong>：放置挂机机制本身具备较强的跨文化通用性，低操作门槛、碎片化时间、离线收益等设计不依赖特定文化背景。但MMO社交层（公会、交易行、组队副本）在不同文化圈的接受度存在差异，东亚玩家对公会和组队的接受度较高，欧美玩家更偏好单人或轻社交体验。。</p>
+
+
+
+<!-- ==================== 4.2 版本与运营活动分析 ==================== -->
+<h3 style="">4.2 版本与运营活动分析</h3>
+
+<h4 style="">版本更新节奏</h4>
+
+<p style="">杖剑传说采用<strong>赛季制+小版本迭代</strong>的混合更新模式。赛季更新约每3-4个月一次，推出新国度+新转职阶+新伙伴+新幻兽；小版本迭代频率约每2-4周一次，推出联动活动、平衡性调整、福利活动等。</p>
+
+<table style="">
+  <tbody><tr><th>时间</th><th>版本/活动</th><th>类型</th></tr>
+  <tr><td>2025.05.29</td><td>公测上线</td><td>大版本</td></tr>
+  <tr><td>2025.07</td><td>港澳台+日本+新马上线</td><td>区域上线</td></tr>
+  <tr><td>2025.07起</td><td>首次联动（罗小黑等）</td><td>联动活动</td></tr>
+  <tr><td>2026.03.03</td><td>伍六七联动版本（v1.2.3）</td><td>联动活动</td></tr>
+  <tr><td>2026.05</td><td>一周年庆典（福利官陈赫）</td><td>运营活动</td></tr>
+  <tr><td>2026.05.19</td><td>欧美版（Sword x Staff）上线</td><td>区域上线</td></tr>
+  <tr><td>2026.08.30</td><td>S6赛季「闪耀羁绊」开启（八转、艾珀希国度、宙斯）</td><td>赛季更新</td></tr>
+  <tr><td>2026.09.24</td><td>非人哉联动开启</td><td>联动活动</td></tr>
+</tbody></table>
+
+<div class="note" style="">
+  <strong>说明</strong>：上表仅列出有公开信息支撑的关键节点，非完整版本日志。完整版本更新记录需查阅官方公告。
+</div>
+
+<h4 style="">各区域运营策略观察</h4>
+
+<div class="card card-accent" style="">
+  <div class="card-title">中国大陆：成熟运营，赛季制驱动</div>
+  <p>作为首个上线区域，大陆版已进入S6赛季，运营节奏成熟。赛季制内容供给+高频联动活动（14个月9次以上联动）维持长线活跃度。Q2畅销榜平均69名，排名有所下滑，与流水下降趋势一致。</p>
+</div>
+
+<div class="card card-brand" style="">
+  <div class="card-title">港澳台+日本：早期表现强劲，后续衰减</div>
+  <p>上线初期表现亮眼，港澳台多次登顶免费榜和畅销榜，日本畅销榜最高第17名。但季度流水数据显示连续4季下降（4.78→3.14→2.00→1.33亿元），衰减幅度较大。日本市场的衰减可能与二次元放置RPG品类竞争激烈、内容消耗速度快有关。<span class="hl-warn">※此为基于流水数据的推断</span>。</p>
+  <p><strong>官方态度</strong>：董事长卢竑岩在2025半年报业绩说明会上表示，《杖剑传说》"一开始就不是针对海外做产品设计的"，是基于国内用户需求设计，只是选题材本身有国际化机会。日本起量表现不如港澳台，因此会更审慎推广；但他强调"起量慢不意味着最终成绩就如何，早期起量快慢和最终成绩有关系，但关系不是很大"。<span class="hl-accent">※以上为官方表态原文转述</span>。</p>
+</div>
+
+<div class="card card-warn" style="">
+  <div class="card-title">欧美：首月表现尚可，尚未盈利</div>
+  <p>欧美版（Sword x Staff）2026年5月19日上线，首月同时位于10余个区域市场App Store畅销榜Top50，美国最高第26名。但吉比特半年报明确披露"因前期发行投入较大，截至本期末尚未盈利"。欧美市场的获客成本（CAC）通常高于东亚，放置RPG品类在欧美的竞争也较为激烈（如AFK Journey等），盈利周期可能较长。</p>
+</div>
+
+<div class="card card-danger" style="">
+  <div class="card-title">韩国+东南亚：待上线，Q4计划</div>
+  <p>吉比特半年报披露计划2026年Q4在韩国及东南亚市场上线。韩国市场对MMO和放置RPG接受度较高，但本土竞品（如DNFM等）竞争激烈；东南亚市场增长潜力大但ARPU相对较低。这两个区域的表现将是杖剑传说全球化战略的关键验证。<span class="hl-warn">※上线时间为计划，可能调整</span>。</p>
+</div>
+
+<h4 style="">福利策略观察</h4>
+
+<p style="">从公开信息看，杖剑传说的福利策略在各区域保持了较高的一致性：</p>
+
+<ul style="">
+  <li><strong>新手福利</strong>：新人首周可领150抽、免费幻装、随机传说古遗物箱等，降低开荒门槛</li>
+  <li><strong>联动福利</strong>：每次联动签到送免费伙伴+抽卡券（如非人哉联动送30连抽+伙伴九月）</li>
+  <li><strong>里程碑福利</strong>：玩家突破100万、畅销榜登顶等里程碑发放全服奖励</li>
+  <li><strong>周年庆福利</strong>：一周年庆典有福利官陈赫代言及大量福利活动</li>
+</ul>
+
+<p style="">福利策略的高一致性有利于降低各区域的运营成本，但也可能导致区域差异化不足，不同市场的玩家福利预期存在差异（如日本玩家对联动福利的期待更高，欧美玩家对P2W（付费即赢）的容忍度更低）。<span class="hl-warn">※此为分析推断</span>。</p>
+
+<div class="judgment-box" style="">
+  <div class="j-label">境外发行判断</div>
+  <div class="j-content">杖剑传说的阶梯式全球化策略在<strong>风险控制</strong>上表现稳健，通过前序区域验证再推广，降低了全球同步发行的失败风险。但也存在两个核心挑战：一是<strong>港澳台+日本市场的快速衰减</strong>（连续4季流水下降），说明内容供给和本地化运营未能有效维持长线留存；二是<strong>欧美版尚未盈利</strong>，高CAC市场的获客效率和付费转化需要持续优化。即将上线的韩国和东南亚市场是重要的增量机会，但也面临本土竞品的激烈竞争。</div>
+</div>
+
+
+
+<!-- ==================== 五、运营数据与市场表现观察 ==================== -->
+<h2 id="part5" style=""><span class="num">五</span>运营数据与市场表现观察</h2>
+
+<p style="">本部分聚焦可量化的公开数据（畅销榜排名、流水规模、TapTap评分及关注量），不涉及对玩家评论内容的主观解读。受限于公开渠道数据粒度，部分数据为区间值或第三方预估，已在表注中说明。</p>
+
+<!-- ==================== 5.1 畅销榜与流水表现 ==================== -->
+<h3 style="">5.1 畅销榜与流水表现</h3>
+
+<table style="">
+  <tbody><tr><th>时间区间</th><th>App Store 畅销榜排名</th><th>流水数据（公开来源）</th></tr>
+  <tr><td><strong>2025年5月（国服上线）</strong></td><td>大陆最高 Top 10</td><td>首月国服表现强劲（吉比特2025半年报披露：截至6月30日杖剑传说流水4.24亿元）</td></tr>
+  <tr><td><strong>2025年7月（港澳台+日本同步上线）</strong></td><td>港澳台/日本多次登顶免费榜及畅销榜</td><td>海外半个月流水过亿（据点点数据/雪球报道）</td></tr>
+  <tr><td><strong>2025年7-9月</strong></td><td>大陆稳定在畅销榜前30</td><td>据头条复盘，4个月累计流水约16亿元</td></tr>
+  <tr><td><strong>2026年Q1</strong></td><td>大陆稳定在畅销榜前60</td><td>2026H1（1-6月）合计流水约14.6亿元（吉比特2026半年报口径）</td></tr>
+  <tr><td><strong>2026年Q2</strong></td><td>大陆平均69名</td><td>2026Q2吉比特归母净利润5.74亿元，同比增长69.3%（含其他产品贡献）</td></tr>
+</tbody></table>
+
+<div class="note note-warn" style="">
+  <strong>数据说明</strong>：4.24亿、14.6亿等流水数据来自吉比特定期报告及主流财经媒体报道（腾讯新闻、雪球、头条）；畅销榜排名来自TapTap论坛记录及吉比特半年报披露；海外流水数据来自点点数据等第三方机构估算，非官方披露，仅供参考。
+</div>
+
+<h4 style="">趋势观察</h4>
+
+<ul style="">
+  <li><strong>上线爆发期</strong>：2025年5-7月国服+港澳台+日本三区同步爆发，畅销榜多次登顶，是流水峰值阶段</li>
+  <li><strong>回落阶段</strong>：2025年Q3后大陆畅销榜排名从Top 10下滑至前30-60区间，月流水环比呈下滑趋势，符合放置类手游"上线爆发→自然回落"的常规曲线</li>
+  <li><strong>长线表现</strong>：2026H1合计14.6亿元流水说明产品在自然回落阶段仍保持较强的收入能力，但月均流水（约2.4亿）已较首月（4.24亿）显著下降</li>
+  <li><strong>海外增量</strong>：2026年5月欧美版（Sword x Staff）上线，欧美市场的长线表现待观察</li>
+</ul>
+
+<div class="judgment-box" style="">
+  <div class="j-label">市场表现判断</div>
+  <div class="j-content">杖剑传说的市场表现呈现典型的<strong>"上线爆发→自然回落"</strong>曲线：首月凭借放置×MMO差异化定位与多区域同步发行迅速冲高，后续随头部付费用户饱和、内容更新节奏及竞品分流，月流水逐级回落。从2026H1的14.6亿流水看，产品已进入<strong>长线运营期</strong>，后续表现将取决于韩国/东南亚新区域增量、赛季制内容供给节奏与中间档位付费承接能力的优化。</div>
+</div>
+
+<!-- ==================== 5.2 渠道评分与关注量 ==================== -->
+<h3 style="">5.2 渠道评分与关注量</h3>
+
+<table style="">
+  <tbody><tr><th>渠道</th><th>评分/数据</th><th>说明</th></tr>
+  <tr><td><strong>TapTap</strong></td><td>8.6分 / 223万关注 / 4.1万评价</td><td>评分较高，关注量级在放置类手游中处于头部</td></tr>
+  <tr><td><strong>App Store（大陆）</strong></td><td>上线初期Top 10，长期保持前60，2026Q2平均69名</td><td>排名较上线初期下滑，但仍位于畅销榜前100内</td></tr>
+  <tr><td><strong>App Store（港澳台）</strong></td><td>上线初期曾登顶免费榜与畅销榜</td><td>上线初期表现强劲</td></tr>
+  <tr><td><strong>App Store（日本）</strong></td><td>畅销榜最高第17名</td><td>后续排名有所回落</td></tr>
+  <tr><td><strong>App Store（美国）</strong></td><td>畅销榜最高第26名</td><td>欧美版上线首月数据</td></tr>
+</tbody></table>
+
+<div class="note note-warn" style="">
+  <strong>数据说明</strong>：TapTap评分8.6分为当前值（数据截至2026年9月），关注量为TapTap官方页面展示数据；畅销榜排名来自TapTap论坛玩家记录及吉比特半年报披露。巴哈姆特、Google Play、Discord等海外渠道的具体评分公开信息有限，暂未列入。本部分仅记录客观数据，不对玩家评论内容做主观解读。
+</div>
+
+<div class="note" style="">
+  <strong>本部分信息来源</strong>：吉比特2025年半年报、2026年半年报（流水数据）、腾讯新闻/雪球/头条财经媒体报道（流水及净利润数据）、TapTap官方页面（评分、关注量、畅销榜记录）、点点数据（海外流水估算，非官方）。畅销榜排名及流水数据为公开渠道整理。<strong>数据截至2026年9月28日</strong>。
+</div>
+
+<!-- ==================== 六、调优建议与优化方案 ==================== -->
+<h2 id="part6" style=""><span class="num">六</span>调优建议与优化方案</h2>
+
+<p style="">本部分基于前五部分的分析（核心玩法体验、竞品对比、境外发行、运营数据），针对识别出的核心问题提出调优方向概述。受限于本报告基于公开信息分析、无游戏内部数据（留存曲线、付费分层数据、各系统使用率等）支撑，本部分不展开具体实施清单，仅给出方向性建议。</p>
+
+<h3>调优方向概述</h3>
+
+<p style="">综合前五部分的产品分析、竞品对比、境外发行与运营数据观察，杖剑传说当前阶段的核心调优方向可归纳为以下三点：</p>
+
+<ul style="">
+  <li><strong>商业化结构优化</strong>：中间付费档位（100-1000元）缺乏持续性高性价比承接产品，是流水自然回落阶段的主要结构性短板。调优方向为填补该档位区间（如月费制中氪礼包、累充阶梯奖励），降低流水对头部付费用户的过度依赖，缓解微氪→中氪迁移路径断裂的问题。</li>
+  <li><strong>海外市场深耕</strong>：日本市场流水随时间衰减、欧美版上线后尚未盈利，海外表现与大陆市场存在差距。调优方向为针对区域文化差异调整内容策略——日本市场引入本土认知度高的联动IP并强化叙事深度，欧美市场优化获客渠道组合并调整商业化叙事（强调"零氪可玩"以降低P2W敏感度），同时为即将上线的韩国/东南亚市场提前布局本地化方案。</li>
+  <li><strong>长线运营支撑</strong>：放置类手游"上线爆发→自然回落"的曲线决定了长线表现依赖于内容供给节奏与用户基数维护。调优方向为丰富赛季中后段内容供给（中期活动、长线成就、PVP深度玩法），并设计老玩家回流机制（回归礼包、召回活动），在自然回落阶段维持社交系统所需的用户基数。</li>
+</ul>
+
+<div class="note note-warn" style="">
+  <strong>说明</strong>：以上为基于本报告前五部分公开信息分析的调优方向概述，非可落地的实施清单。具体实施方案需结合游戏内部数据（留存曲线、付费分层数据、各系统使用率、海外各区域真实付费转化等）进一步验证和细化。
+</div>
+
+<div class="footer" style="">
+  杖剑传说 · 游戏体验与发行分析报告 · 完整版<br>
+  2026-09-28 | 六部分完整报告
+</div>
+</div>
+
+<script>
+(function(){
+  var progressBar = document.getElementById('progressBar');
+  var progText = document.getElementById('progText');
+  var navLinks = document.querySelectorAll('.topbar-nav a');
+  var sections = [];
+  navLinks.forEach(function(link){
+    var id = link.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if (sec) sections.push({link: link, sec: sec});
+  });
+  function updateProgress(){
+    var st = document.documentElement.scrollTop || document.body.scrollTop;
+    var sh = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+    var pct = sh > 0 ? Math.min(100, Math.max(0, (st / sh) * 100)) : 0;
+    if (progressBar) progressBar.style.width = pct + '%';
+    if (progText) progText.textContent = Math.round(pct) + '%';
+    // active nav highlight
+    var current = sections[0];
+    for (var i = 0; i < sections.length; i++){
+      if (sections[i].sec.getBoundingClientRect().top <= 120) current = sections[i];
+    }
+    navLinks.forEach(function(l){ l.classList.remove('active'); });
+    if (current) current.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+})();
+</script>
+
+
+
+
+
+
+
+
+</body></html>
